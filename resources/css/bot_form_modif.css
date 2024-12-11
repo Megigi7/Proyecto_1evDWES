@@ -1,0 +1,28 @@
+body{
+    text-align: center;
+}
+
+h1{
+    font-size: 50px;
+    color: rgb(130, 27, 82);
+    text-decoration: underline;
+    background-color: rgb(255, 231, 235);
+    padding: 10px 0px 10px 0px;
+}
+
+button{
+    padding: 20px;
+    margin: 30px;
+    border: 2px solid palevioletred;
+    background-color: rgb(255, 231, 235);
+    box-shadow: 10px 5px 5px rgb(130, 27, 82);
+    color: rgb(130, 27, 82);
+    border-radius: 20px;
+    font-size: 30px;
+}
+
+button:hover{
+    background-color: palevioletred;
+    border-color: rgb(130, 27, 82);
+    color: white;
+}

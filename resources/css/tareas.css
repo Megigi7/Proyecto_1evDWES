@@ -1,0 +1,141 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #80deea);
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    animation: fadeIn 1s ease-in-out;
+    overflow-x: auto; /* Allow horizontal scrolling */
+}
+
+.container h1 {
+    text-align: center;
+    color: #00796b;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+#lista_tareas table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#lista_tareas th, #lista_tareas td {
+    padding: 12px 20px; /* Adjust padding to add more space on the sides */
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+#lista_tareas th {
+    background: linear-gradient(to right, #66bb6a, #43a047); /* Green gradient */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+#lista_tareas td {
+    background: rgba(224, 247, 250, 0.8); /* Light blue background */
+}
+
+#lista_tareas tr:nth-child(even) td {
+    background: rgba(179, 229, 252, 0.8); /* Slightly darker blue for even rows */
+}
+
+#lista_tareas tr:hover td {
+    background: rgba(144, 202, 249, 0.8); /* Darker blue on hover */
+    transform: scale(1.02); /* Add a slight zoom effect on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+form {
+    display: inline;
+}
+
+form input[type="submit"] {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 5px;
+}
+
+form input[type="submit"]:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+form input[type="submit"].eliminar {
+    background: linear-gradient(to right, #ff5252, #ff1744);
+    color: white;
+}
+
+form input[type="submit"].eliminar:hover {
+    background: linear-gradient(to right, #ff1744, #d50000);
+}
+
+form input[type="submit"].modificar {
+    background: linear-gradient(to right, #448aff, #2979ff);
+    color: white;
+}
+
+form input[type="submit"].modificar:hover {
+    background: linear-gradient(to right, #2979ff, #2962ff);
+}
+
+form input[type="submit"].cambiar_estado {
+    background: linear-gradient(to right, #69f0ae, #00e676);
+    color: white;
+}
+
+form input[type="submit"].cambiar_estado:hover {
+    background: linear-gradient(to right, #00e676, #00c853);
+}
+
+.paginacion {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paginacion a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #4fc3f7, #29b6f6);
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.paginacion a:hover {
+    background: linear-gradient(to right, #29b6f6, #0288d1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

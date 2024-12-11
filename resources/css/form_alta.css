@@ -1,0 +1,104 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #80deea);
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 800px;
+    animation: fadeIn 1s ease-in-out;
+    margin-bottom: 50px; /* Add space at the bottom */
+}
+
+.container h2 {
+    text-align: center;
+    color: #00796b;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+p.mensaje {
+    text-align: center;
+    color: #d32f2f;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+form p {
+    margin: 10px 0 5px;
+    color: #00796b;
+    font-weight: bold;
+    grid-column: span 2;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="date"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 8px rgba(0, 121, 107, 0.5);
+    outline: none;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #00796b, #004d40);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    grid-column: span 2;
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(to right, #004d40, #00251a);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

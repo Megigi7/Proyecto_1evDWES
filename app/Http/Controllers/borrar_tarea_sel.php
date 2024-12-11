@@ -8,21 +8,16 @@
  */
 
 require_once('../app/Models/conexion_db.php');
+require_once('../app/Models/consultas_sql.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
 
-    try {
-        $db = Database::getInstance();
-        $mysqli = $db->getConnection();
-
-        // Ejecutaremos una consulta SQL que borre la tarea seleccionada según su ID
-        $stmt_Delete = $mysqli->prepare("DELETE FROM tarea WHERE id = ?");
-        $stmt_Delete->bind_param('i', $id);
-        $stmt_Delete->execute();
+    if(borrar_tarea($id)) {
         return "Tarea eliminada correctamente";
-    } catch (Exception $e) {
-        return "Error: " . $e->getMessage();
+    } else {
+        return "Error al eliminar la tarea";
     }
+
 }
 ?>

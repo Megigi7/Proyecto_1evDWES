@@ -62,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $new_estado = $_POST['estado'];
     $new_operario_encargado = $_POST['operario'];
     $new_fecha_realizacion = $_POST['fecha_realizacion'];
-    $new_anotaciones_anteriores = $_POST['anotaciones_anteriores'];
-    $new_anotaciones_posteriores = $_POST['anotaciones_posteriores'];
+    $new_anotaciones_anteriores = isset($_POST['anotaciones_anteriores']) ? $_POST['anotaciones_anteriores'] : '';
+    $new_anotaciones_posteriores = isset($_POST['anotaciones_posteriores']) ? $_POST['anotaciones_posteriores'] : '';    
 
     // Validaciones
     if (empty($new_descripcion) || empty($new_operario_encargado) || !validDniCifNie($new_cif_nif) || !validarTelefono($new_tel_s_contacto) || !validarCodigoPostal($new_codigo_postal) || !filter_var($new_correo, FILTER_VALIDATE_EMAIL) || !validarFecha($new_fecha_realizacion)) {
@@ -122,3 +122,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mysqli->close();
 }
 ?>
+

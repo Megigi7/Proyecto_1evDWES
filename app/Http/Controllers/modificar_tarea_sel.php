@@ -8,6 +8,31 @@
  */
 
 require_once('../app/Models/conexion_db.php');
+require_once('../app/Models/validaciondni.php'); 
+
+
+function validarTelefono($telefono) {
+   return preg_match('/^[0-9\s\-]+$/', $telefono);
+}
+
+
+function validarCodigoPostal($codigo_postal) {
+   return preg_match('/^\d{5}$/', $codigo_postal);
+}
+
+
+function validarFecha($fecha) {
+   $fecha_actual = date('Y-m-d');
+   return ($fecha > $fecha_actual);
+}
+
+
+
+
+
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $id = $_GET['id'];
@@ -33,32 +58,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $id = $_POST['id'];
-    $new_cif_nif = $_POST['cif_nif'];
-    $new_nombre_cliente = $_POST['nombre_cliente'];
-    $new_tel_s_contacto = $_POST['tel_s_contacto'];
-    $new_descripcion = $_POST['descripcion'];
-    $new_correo = $_POST['correo'];
-    $new_direccion = $_POST['direccion'];
-    $new_poblacion = $_POST['poblacion'];
-    $new_codigo_postal = $_POST['codigo_postal'];
-    $new_provincia = $_POST['provincia'];
-    $new_estado = $_POST['estado'];
-    $new_operario   = $_POST['operario'];
-    $new_fecha_realizacion = $_POST['fecha_realizacion'];
-    $new_anotaciones_anteriores = isset($_POST['anotaciones_anteriores']) ? $_POST['anotaciones_anteriores'] : '';
-    $new_anotaciones_posteriores = isset($_POST['anotaciones_posteriores']) ? $_POST['anotaciones_posteriores'] : '';
+    $cif_nif = $_POST['cif_nif'];
+    $nombre_cliente = $_POST['nombre_cliente'];
+    $tel_s_contacto = $_POST['tel_s_contacto'];
+    $descripcion = $_POST['descripcion'];
+    $correo = $_POST['correo'];
+    $direccion = $_POST['direccion'];
+    $poblacion = $_POST['poblacion'];
+    $codigo_postal = $_POST['codigo_postal'];
+    $provincia = $_POST['provincia'];
+    $estado = $_POST['estado'];
+    $operario_encargado   = $_POST['operario'];
+    $fecha_realizacion = $_POST['fecha_realizacion'];
+    $anotaciones_anteriores = isset($_POST['anotaciones_anteriores']) ? $_POST['anotaciones_anteriores'] : '';
+    $anotaciones_posteriores = isset($_POST['anotaciones_posteriores']) ? $_POST['anotaciones_posteriores'] : '';
+
+
+    if (empty($descripcion) || empty($operario_encargado) || !validDniCifNie($cif_nif) || !validarTelefono($tel_s_contacto) || !validarCodigoPostal($codigo_postal) || !filter_var($correo, FILTER_VALIDATE_EMAIL) || !validarFecha($fecha_realizacion)) {
+        return [
+            'success' => false,
+            'data' => [
+                'id' => $id,
+                'cif_nif' => $cif_nif,
+                'nombre_cliente' => $nombre_cliente,
+                'tel_s_contacto' => $tel_s_contacto,
+                'descripcion' => $descripcion,
+                'correo' => $correo,
+                'direccion' => $direccion,
+                'poblacion' => $poblacion,
+                'codigo_postal' => $codigo_postal,
+                'provincia' => $provincia,
+                'estado' => $estado,
+                'operario_encargado' => $operario_encargado,
+                'fecha_realizacion' => $fecha_realizacion,
+                'anotaciones_anteriores' => $anotaciones_anteriores,
+                'anotaciones_posteriores' => $anotaciones_posteriores
+            ]
+        ];
+    }
+
 
     try {
         $db = Database::getInstance();
         $mysqli = $db->getConnection();
         
         // Ejecutaremos una consulta SQL que actualice los datos de la tarea seleccionada
-        $stmt_Update = $mysqli->prepare("UPDATE tarea SET cif_nif = ?, nombre_cliente = ?, tel_s_contacto = ?, descripcion = ?, correo = ?, direccion = ?, poblacion = ?, codigo_postal = ?, provincia = ?, estado = ?, operario_encargado = ?, fecha_realizacion = ?, anotaciones_anteriores = ?, anotaciones_posteriores = ? WHERE id = ?");
-        $stmt_Update->bind_param('ssssssssssssssi', $new_cif_nif, $new_nombre_cliente, $new_tel_s_contacto, $new_descripcion, $new_correo, $new_direccion, $new_poblacion, $new_codigo_postal, $new_provincia, $new_estado, $new_operario, $new_fecha_realizacion, $new_anotaciones_anteriores, $new_anotaciones_posteriores, $id);
+        $stmt_Update = $mysqli->prepare("UPDATE tarea SET cif_nif = '?', nombre_cliente = '?', tel_s_contacto = '?', descripcion = '?', correo = '?', direccion = '?', poblacion = '?', codigo_postal = '?', provincia = '?', estado = '?', operario_encargado = '?', fecha_realizacion = '?', anotaciones_anteriores = '?', anotaciones_posteriores = '?' WHERE id = ?");
+        $stmt_Update->bind_param('ssssssssssssssi', $cif_nif, $nombre_cliente, $tel_s_contacto, $descripcion, $correo, $direccion, $poblacion, $codigo_postal, $provincia, $estado, $operario_encargado, $fecha_realizacion, $anotaciones_anteriores, $anotaciones_posteriores, $id);
         $stmt_Update->execute();
         
-        return "Datos actualizados correctamente";
-        
+    if ($stmt_Insert->execute()) {
+        return ['success' => true];
+    } else {
+        return [
+            'success' => true,
+            'data' => [
+                'id' => $id,
+                'cif_nif' => $cif_nif,
+                'nombre_cliente' => $nombre_cliente,
+                'tel_s_contacto' => $tel_s_contacto,
+                'descripcion' => $descripcion,
+                'correo' => $correo,
+                'direccion' => $direccion,
+                'poblacion' => $poblacion,
+                'codigo_postal' => $codigo_postal,
+                'provincia' => $provincia,
+                'estado' => $estado,
+                'operario_encargado' => $operario_encargado,
+                'fecha_realizacion' => $fecha_realizacion,
+                'anotaciones_anteriores' => $anotaciones_anteriores,
+                'anotaciones_posteriores' => $anotaciones_posteriores
+            ]
+        ];
+    }        
     } catch (Exception $e) {
         return "Error: " . $e->getMessage();
     }

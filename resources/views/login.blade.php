@@ -9,7 +9,7 @@
         <form action="/mi-proyecto-laravel/public/login" method="POST">
             @csrf
             <h2>Iniciar Sesión</h2>
-            <input type="text" name="nombre" placeholder="Nombre" value="{{ old('nombre', isset($_COOKIE['nombre']) ? $_COOKIE['nombre'] : '') }}">
+            <input type="text" name="nombre" placeholder="Nombre" value="{{ isset($old_nombre) ? $old_nombre : '' }}">
             <input type="password" name="contraseña" placeholder="Contraseña">
             <button type="submit">Iniciar sesión</button>
         </form>

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LoginController;
+
 /**
  * @file web.php
  * @brief Define las rutas de la aplicación.
@@ -11,16 +13,10 @@ use Illuminate\Support\Facades\Route;
  *          modificación de tareas y logout.
  */
 
-// Ruta para la página de login
-Route::get('/', function () {
-    return view('login');
-});
-Route::view('/login', 'login')->name('login');
-Route::post('/login', function () {
-    $result = include '../app/Http/Controllers/LoginController.php';
-    return $result == 1 || $result == 0 ? view('form_modif', ['tipo' => $result]) : view('login', ['error' => "Usuario no existente", 'old_nombre' => $result]);
-});
-
+ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+ Route::get('/login', [LoginController::class, 'showLoginForm']);
+ Route::post('/login', [LoginController::class, 'authenticate']);
+ 
 // Ruta para la selección de opciones
 Route::get('/opciones', function () {
     return view('form_modif');
@@ -58,8 +54,16 @@ Route::get('/modif_tarea_sel', function () {
 });
 
 Route::post('/modif_tarea_sel',function(){
-    $answer = include '../app/Http/Controllers/modificar_tarea_sel.php';
-    return view('confirmaciones', ['mensaje' => $answer]);
+    $result = include '../app/Http/Controllers/modificar_tarea_sel.php';
+    if ($result['success'] === true) {
+        return view('confirmaciones', ['mensaje' => "Datos actualizados correctamente"]);
+    } else {
+        return view('form_modif_sel', [
+            'mensaje' => "Ha ocurrido un error, compruebe sus datos",
+            'datos' => $result['data']
+        ]);
+    }
+
 });
 
 // Ruta para confirmar el borrado de una tarea
@@ -76,12 +80,12 @@ Route::post('/confirmar_borrar', function () {
 // Ruta para cambiar el estado de una tarea 
 Route::get('/cambiar_estado', function () {
     $datos  = include '../app/Http/Controllers/cambiar_estado.php';
-    return view('form_cambiar_estado', ['datos' => $datos]);
+    return view('form_cambiar_estado', ['tarea' => $datos]);
 });
 
 Route::post('/cambiar_estado', function () {
     $answer = include '../app/Http/Controllers/cambiar_estado.php';
-    return view('confirmaciones', ['mensaje' => $answer]);
+    return view('confirmaciones', ['mensaje' => "Estado de la tarea actualizado correctamente"]);
 });
 
 // Ruta para cerrar sesión

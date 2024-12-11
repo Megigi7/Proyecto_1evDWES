@@ -1,8 +1,12 @@
+session_start();
 
 @extends('layouts.app')
 
 @section('content')
-    <link rel="stylesheet" type="text/css" href="../resources/css/tareas.css">
+    @if(!isset($_COOKIE['nombre']) || $_SESSION['tipo'] != 1)
+        <p>No tienes permisos para acceder a esta página</p>
+    @else
+        <link rel="stylesheet" type="text/css" href="../resources/css/tareas.css">
         <h1>Listado de tareas</h1>
         @if (isset($mensaje))
             <p class="error">{{ $mensaje }}</p>
@@ -65,11 +69,13 @@
                             <input type='hidden' name='id' value="{{ $tarea['id'] }}">
                             <input type='submit' value='Modificar' class='modificar'>
                         </form>
-                        <form action="/mi-proyecto-laravel/public/cambiar_estado?id={{ $tarea['id'] }}" method='get' style='display:inline;'>
-                            @csrf
-                            <input type='hidden' name='id' value="{{ $tarea['id'] }}">
-                            <input type='submit' value='Cambiar estado' class='cambiar_estado'>
-                        </form>
+                        @if ($tarea['estado'] != 'Realizada')
+                            <form action="/mi-proyecto-laravel/public/cambiar_estado?id={{ $tarea['id'] }}" method='get' style='display:inline;'>
+                                @csrf
+                                <input type='hidden' name='id' value="{{ $tarea['id'] }}">
+                                <input type='submit' value='Cambiar estado' class='cambiar_estado'>
+                            </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -81,4 +87,5 @@
                 <a href="/mi-proyecto-laravel/public/mostrar_tareas?page={{$i}}&filtro_estado={{$filtro_estado}}" class="{{ $i == $currentPage ? 'active' : '' }}">{{ $i }}</a>
             @endfor
         </div>
+    @endif
 @endsection
